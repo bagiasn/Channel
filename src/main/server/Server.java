@@ -6,6 +6,8 @@ import java.net.Socket;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import main.server.utils.UserManager;
+
 public class Server implements Runnable {
 
 	private final static int port = 32467;
@@ -13,7 +15,12 @@ public class Server implements Runnable {
 	
 	@Override
 	public void run() { 
+		// Initialize user manager.
+		UserManager userManager = UserManager.getInstance();
+		// Create an executor for better thread management.
 		Executor userPool = Executors.newFixedThreadPool(maxUsers);
+		// Counter for the users.
+		int userId = 0;
 		
 		ServerSocket server = null;
 		// 
@@ -21,11 +28,15 @@ public class Server implements Runnable {
 			// Create a server socket to handle connections.
 			server = new ServerSocket(port);
 			// Run forever.
-			while(true) {
+			while (true) {
 				// Create a new socket for each client.
 				Socket clientSocket = server.accept();
 				// Handle each user in a separate thread.
-				UserHandler user = new UserHandler(clientSocket);
+				UserHandler user = new UserHandler(userId, clientSocket);
+				// Increase the number of users.
+				userId++;
+				// Add the user to the list.
+				userManager.insertUser(userId, user);
 				// Execute.
 				userPool.execute(user);
 			}

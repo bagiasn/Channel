@@ -6,21 +6,27 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+import main.server.utils.UserManager;
+
 public class UserHandler implements Runnable {
 	
 	private Socket socket;
+	private int id;
 	
 	private InputStream inputStream;
 	private OutputStream outputStream;
 	
-	public UserHandler(Socket clientSocket) {
-		this.socket = clientSocket;
+	public UserHandler(int id, Socket socket) {
+		this.id = id;
+		this.socket = socket;
 	}
 
 	@Override
 	public void run() {
 		byte[] inputBuffer = new byte[256];
 		String msg;
+		// Get a reference to the user manager.
+		UserManager userManager = UserManager.getInstance();
 		
 		try {
 			inputStream = socket.getInputStream();
@@ -41,10 +47,11 @@ public class UserHandler implements Runnable {
 				try {
 					socket.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
+			// Remove yourself from the list, before exiting.
+			userManager.removeUser(id);
 		}
 	}
 	
