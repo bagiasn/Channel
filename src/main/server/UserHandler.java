@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+import main.server.utils.ChannelManager;
+import main.server.utils.InputHelper;
 import main.server.utils.UserManager;
 
 public class UserHandler implements Runnable {
@@ -23,8 +25,8 @@ public class UserHandler implements Runnable {
 
 	@Override
 	public void run() {
-		byte[] inputBuffer = new byte[256];
-		String msg;
+		// Get a reference to the channel manager.
+		ChannelManager channelManager = ChannelManager.getInstance();
 		// Get a reference to the user manager.
 		UserManager userManager = UserManager.getInstance();
 		
@@ -35,9 +37,13 @@ public class UserHandler implements Runnable {
 			outputStream.write("Welcome to Channel".getBytes());
 			outputStream.write("Available commands are:...".getBytes());
 			while (true) {
+				byte[] inputBuffer = new byte[64];
 				inputStream.read(inputBuffer);
-				msg = new String(inputBuffer, StandardCharsets.UTF_8);
+				String msg = new String(inputBuffer, StandardCharsets.UTF_8);
 				System.out.println("User says: " + msg);
+				String result = InputHelper.handleResponse(msg, id, channelManager);
+				outputStream.write(result.getBytes());
+				
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

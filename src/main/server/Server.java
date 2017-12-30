@@ -31,10 +31,10 @@ public class Server implements Runnable {
 			while (true) {
 				// Create a new socket for each client.
 				Socket clientSocket = server.accept();
-				// Handle each user in a separate thread.
-				UserHandler user = new UserHandler(userId, clientSocket);
 				// Increase the number of users.
 				userId++;
+				// Handle each user in a separate thread.
+				UserHandler user = new UserHandler(userId, clientSocket);
 				// Add the user to the list.
 				userManager.insertUser(userId, user);
 				// Execute.
