@@ -14,6 +14,11 @@ public class Constants {
 	public final static String RTN_ALREADY_SUB = "You are already subscribed to this channel.";
 	public final static String RTN_NOT_SUB = "You are not subscribed to any channel.";
 	public final static String RTN_OK = "OK";
+	public final static String RTN_GREETING = "Welcome to Channel!\n"
+			+ "Available commands:"
+			+ "\nsubscribe --channel"
+			+ "\nsend --message"
+			+ "\nshout --message";
 	
 	public final static String MSG_SHOUT = "User %d shouts ";
 	

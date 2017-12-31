@@ -36,6 +36,7 @@ public class ChannelManager {
 		if (userChannel == null) return Constants.RTN_NOT_SUB;
 		// Iterate over its members and send the message.
 		for (Integer userId: userChannel.getMembers()) {
+			if (userId == id) continue;
 			UserHandler handler = userManager.getUser(userId);
 			handler.sendMessage(msg);
 		}
@@ -52,6 +53,7 @@ public class ChannelManager {
 		// Iterate over its children and send the message to all its members.
 		for (Channel child: parent.getChildren()) {
 			for (Integer userId: child.getMembers()) {
+				if (userId == id) continue;
 				UserHandler handler = userManager.getUser(userId);
 				handler.sendMessage(msg);
 			}

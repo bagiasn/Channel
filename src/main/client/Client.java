@@ -7,20 +7,21 @@ import java.nio.charset.StandardCharsets;
 
 public class Client implements Runnable {
 	
-	private static final int port = 32467;
+	private final static int port = 32467;
+	private final static int bufferSize = 128;
+	
 	private Socket socket;
 	
 	@Override
 	public void run() {
-		String msg;
-		
 		try {
 			socket = new Socket(InetAddress.getByName(null), port);
 			while (true) {
-				byte[] inputBuffer = new byte[64];
+				byte[] inputBuffer = new byte[bufferSize];
 				socket.getInputStream().read(inputBuffer);
-				msg = new String(inputBuffer, StandardCharsets.UTF_8);
-				System.out.println("Server says: " + msg);
+				String msg = new String(inputBuffer, StandardCharsets.UTF_8);
+				System.out.println(">: " + msg);
+				System.out.print(">: ");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

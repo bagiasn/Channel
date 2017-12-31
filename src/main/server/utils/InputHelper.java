@@ -8,8 +8,10 @@ public class InputHelper {
 		// Avoid abnormal conditions first.
 		if (input == null) return Constants.RTN_EMPTY;
 		if (input.isEmpty()) return Constants.RTN_EMPTY;
-		// Validate format.
-		String[] results = input.split("\\s+");
+		// Validate format. 
+		// Since we don't have a third argument we just split at the first space character. 
+		// Also, remove any quotes so they don't spoil the party.
+		String[] results = input.replaceAll("\"", "").split("\\s", 2);
 		if (results != null && results.length >= 2) {
 			// Route action by command.
 			String response;

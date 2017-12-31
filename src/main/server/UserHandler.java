@@ -6,16 +6,17 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+import main.server.data.Constants;
 import main.server.utils.ChannelManager;
 import main.server.utils.InputHelper;
 import main.server.utils.UserManager;
 
 public class UserHandler implements Runnable {
 	
-	private Socket socket;
-	private int id;
+	private final static int bufferSize = 128;
 	
-	private InputStream inputStream;
+	private int id;
+	private Socket socket;
 	private OutputStream outputStream;
 	
 	public UserHandler(int id, Socket socket) {
@@ -27,35 +28,38 @@ public class UserHandler implements Runnable {
 	public void run() {
 		// Get a reference to the channel manager.
 		ChannelManager channelManager = ChannelManager.getInstance();
-		// Get a reference to the user manager.
-		UserManager userManager = UserManager.getInstance();
 		
 		try {
-			inputStream = socket.getInputStream();
+			InputStream inputStream = socket.getInputStream();
 			outputStream = socket.getOutputStream();
 			// Server starts the conversation by sending greetings and the available commands.
-			outputStream.write("Welcome to Channel".getBytes());
-			outputStream.write("Available commands are:...".getBytes());
+			outputStream.write(Constants.RTN_GREETING.getBytes(), 0, Constants.RTN_GREETING.length());
 			while (true) {
-				byte[] inputBuffer = new byte[64];
+				// We reallocate a new buffer to avoid cleaning it up. Let GC do its job.
+				byte[] inputBuffer = new byte[bufferSize];
+				// Block while waiting for a message.
 				inputStream.read(inputBuffer);
+				// Convert the byte array to string.
 				String msg = new String(inputBuffer, StandardCharsets.UTF_8);
-				System.out.println("User says: " + msg);
+				// Log the message as arrived.
+				System.out.println("User " + id + " says: " + msg);
+				// Pass the message to handle appropriately.
 				String result = InputHelper.handleResponse(msg, id, channelManager);
-				outputStream.write(result.getBytes());
-				
+				// Just, send the result as it is.
+				outputStream.write(result.getBytes());			
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error occured: " + e.getMessage());
 		} finally {
 			if (socket != null) {
 				try {
 					socket.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					System.out.println("Could not close socket.");
 				}
-			}
+			}	
+			// Get a reference to the user manager.
+			UserManager userManager = UserManager.getInstance();
 			// Remove yourself from the list, before exiting.
 			userManager.removeUser(id);
 		}
@@ -66,8 +70,7 @@ public class UserHandler implements Runnable {
 			try {
 				outputStream.write(message.getBytes(), 0, message.length());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Error occured: " + e.getMessage());
 			}
 		} else {
 			System.out.println("This user is not alive");

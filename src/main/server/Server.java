@@ -23,7 +23,7 @@ public class Server implements Runnable {
 		int userId = 0;
 		
 		ServerSocket server = null;
-		// 
+
 		try {
 			// Create a server socket to handle connections.
 			server = new ServerSocket(port);
