@@ -62,7 +62,6 @@ public class ChannelManager {
 	}
 	
 	public String subscribeUser(int id, String channelName) {
-		channelName = channelName.replace('"', ' ').trim();
 		// We need to check all the tree so get the root first.
 		Channel root = channelTree.getRoot();
 		for (Channel cont: root.getChildren()) {

@@ -15,7 +15,7 @@ public class InputHelper {
 		if (results != null && results.length >= 2) {
 			// Route action by command.
 			String response;
-			switch (results[0]) {
+			switch (results[0].toLowerCase()) {
 				case Constants.CMD_SEND:
 					response = channelManager.sendMessage(id, results[1]);
 					break;

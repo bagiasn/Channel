@@ -1,12 +1,12 @@
 package main.server.data;
 
 public class Constants {
-	
+	// Commands
 	public final static String CMD_SEND = "send";
 	public final static String CMD_SHOUT = "shout";
 	public final static String CMD_SUBSCRIBE = "subscribe";
 	
-	// Returns messages
+	// Return messages
 	public final static String RTN_EMPTY = "Empty message";
 	public final static String RTN_INVALID = "Invalid format";
 	public final static String RTN_UNKNOWN = "Unknown command";
@@ -22,6 +22,7 @@ public class Constants {
 	
 	public final static String MSG_SHOUT = "User %d shouts ";
 	
+	// Let's use a little geography to show case the functionality.
 	public final static String[] continents = {"Europe", "Americas", "Oceania", "Asia", "Africa"};
 	public final static String[][] countries = {
 			{"France", "Germany", "Austria", "Italy", "Spain", "Greece"},
