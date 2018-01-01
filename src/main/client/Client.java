@@ -24,13 +24,13 @@ public class Client implements Runnable {
 				System.out.print(">: ");
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error occured: " + e.getMessage());
 		} finally {
 			if (socket != null) {
 				try {
 					socket.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					System.out.println("Error while closing socket: " + e.getMessage());
 				}
 			}
 		}
@@ -40,8 +40,7 @@ public class Client implements Runnable {
 		try {
 			socket.getOutputStream().write(msg.getBytes());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(">: Could not send message " + msg + " Reason: " + e.getMessage());
 		}
 	}
 }

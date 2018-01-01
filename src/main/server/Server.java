@@ -41,13 +41,13 @@ public class Server implements Runnable {
 				userPool.execute(user);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Server failed with error: " + e.getMessage());
 		} finally {
 			if (server != null)
 				try {
 					server.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					System.out.println("Server could not close socket. Error: " + e.getMessage());
 				}
 		}
 	}

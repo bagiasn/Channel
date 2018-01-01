@@ -14,12 +14,12 @@ public class Main {
 		
 		try {
 			while (true) {
-				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-				String msg = br.readLine();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+				String msg = reader.readLine();
 				clientWorker.sendMessage(msg);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Client thread failed with error: " + e.getMessage());
 		}
 	}
 }

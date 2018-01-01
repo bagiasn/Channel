@@ -31,6 +31,7 @@ public class UserHandler implements Runnable {
 		
 		try {
 			InputStream inputStream = socket.getInputStream();
+			// Reference the member variable to send messages concurrently.
 			outputStream = socket.getOutputStream();
 			// Server starts the conversation by sending greetings and the available commands.
 			outputStream.write(Constants.RTN_GREETING.getBytes(), 0, Constants.RTN_GREETING.length());

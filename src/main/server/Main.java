@@ -10,8 +10,7 @@ public class Main {
 		try {
 			server.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Server crashed with error: " + e.getMessage());
 		}
 	}
 
