@@ -13,7 +13,7 @@ import main.server.utils.UserManager;
 
 public class UserHandler implements Runnable {
 	
-	private final static int bufferSize = 128;
+	private final static int bufferSize = 512;
 	
 	private int id;
 	private Socket socket;

@@ -10,20 +10,23 @@ public class InputHelper {
 		if (input.isEmpty()) return Constants.RTN_EMPTY;
 		// Validate format. 
 		// Since we don't have a third argument we just split at the first space character. 
-		// Also, remove any quotes so they don't spoil the party.
-		String[] results = input.replaceAll("\"", "").split("\\s", 2);
+		String[] results = input.split("\\s+", 2);
 		if (results != null && results.length >= 2) {
+			String resultTrimmed = results[1].trim();
 			// Route action by command.
 			String response;
 			switch (results[0].toLowerCase()) {
 				case Constants.CMD_SEND:
-					response = channelManager.sendMessage(id, results[1]);
+					response = channelManager.sendMessage(id, resultTrimmed);
 					break;
 				case Constants.CMD_SHOUT:
-					response = channelManager.shoutMessage(id, results[1]);
+					response = channelManager.shoutMessage(id, resultTrimmed);
 					break;
 				case Constants.CMD_SUBSCRIBE:
-					response = channelManager.subscribeUser(id, results[1]);
+					response = channelManager.subscribeUser(id, resultTrimmed);
+					break;
+				case Constants.CMD_LIST:
+					response = channelManager.getList(resultTrimmed);
 					break;
 				default:
 					response = Constants.RTN_UNKNOWN;

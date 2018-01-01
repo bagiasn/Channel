@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 public class Client implements Runnable {
 	
 	private final static int port = 32467;
-	private final static int bufferSize = 128;
+	private final static int bufferSize = 512;
 	
 	private Socket socket;
 	

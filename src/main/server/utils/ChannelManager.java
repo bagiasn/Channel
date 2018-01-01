@@ -31,6 +31,8 @@ public class ChannelManager {
 	}
 	
 	public String sendMessage(int id, String msg) {
+		// Check for emptiness.
+		if (msg.isEmpty()) return Constants.RTN_INVALID;
 		// Get the channel that the user belongs to.
 		Channel userChannel = channelTree.getChannelByUser(id);
 		if (userChannel == null) return Constants.RTN_NOT_SUB;
@@ -44,6 +46,8 @@ public class ChannelManager {
 	}
 	
 	public String shoutMessage(int id, String msg) {
+		// Check for emptiness.
+		if (msg.isEmpty()) return Constants.RTN_INVALID;
 		// Inform who is the user shouting.
 		msg = String.format(Constants.MSG_SHOUT, id) + msg;
 		// Get the channel that the user belongs to.
@@ -79,5 +83,31 @@ public class ChannelManager {
 			}
 		}
 		return Constants.RTN_NOT_EXISTS;
+	}
+
+	public String getList(String type) {
+		if (type.isEmpty() || type.equalsIgnoreCase(Constants.CMD_ARG_CHANNEL)) {
+			StringBuilder builder = new StringBuilder();
+			for (int i = 0; i < Constants.continents.length; i++) {
+				builder.append( Constants.continents[i]);
+				builder.append(": ");
+				for (String country: Constants.countries[i]) {
+					builder.append(country);
+					builder.append(" ");
+				}
+				builder.append("\n");
+			}
+			return builder.toString();
+		} else if (type.equalsIgnoreCase(Constants.CMD_ARG_GROUP)) {
+			StringBuilder builder = new StringBuilder();
+			for (int i = 0; i < Constants.continents.length; i++) {
+				builder.append( Constants.continents[i]);
+				builder.append(" - ");
+			}
+			builder.append("\n");
+			return builder.toString();
+		} else {
+			return Constants.RTN_INVALID;
+		}
 	}
 }
