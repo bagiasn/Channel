@@ -9,7 +9,6 @@ import java.nio.charset.StandardCharsets;
 import main.server.data.Constants;
 import main.server.utils.ChannelManager;
 import main.server.utils.InputHelper;
-import main.server.utils.UserManager;
 
 public class UserHandler implements Runnable {
 	
@@ -29,7 +28,7 @@ public class UserHandler implements Runnable {
 	public void run() {
 		// Get a reference to the channel manager.
 		ChannelManager channelManager = ChannelManager.getInstance();
-		
+		System.out.println("User " + id + " connected.");
 		try {
 			InputStream inputStream = socket.getInputStream();
 			// Reference the member variable to send messages concurrently.
@@ -60,11 +59,9 @@ public class UserHandler implements Runnable {
 					System.out.println("Could not close socket.");
 				}
 			}	
-			// Get a reference to the user manager.
-			UserManager userManager = UserManager.getInstance();
-			// Remove yourself from the list, before exiting.
-			userManager.removeUser(id);
-			System.out.println("User " + id + " removed from the list.");
+			// Remove yourself from the system.
+			channelManager.removeUser(id);
+			System.out.println("User " + id + " removed.");
 		}
 	}
 	

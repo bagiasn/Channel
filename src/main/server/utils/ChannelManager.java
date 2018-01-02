@@ -110,4 +110,15 @@ public class ChannelManager {
 			return Constants.RTN_INVALID;
 		}
 	}
+	
+	public void removeUser(int id) {
+		// Remove user from the channel if subscribed to any.
+		Channel channel = channelTree.getChannelByUser(id);
+		if (channel != null) {
+			// Cast to Integer to avoid misconceptions (index).
+			channel.getMembers().remove((Integer)id);
+		}
+		// Also, remove him from the user list.
+		userManager.removeUser(id);
+	}
 }
