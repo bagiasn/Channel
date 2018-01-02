@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 
 public class Main {
 	
+	private final static int bufferSize = 512;
+	
 	public static void main(String[] args) {
 		// Start the client code.
 		Client clientWorker = new Client();
@@ -16,7 +18,11 @@ public class Main {
 			while (clientWorker.isRunning) {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 				String msg = reader.readLine();
-				clientWorker.sendMessage(msg);
+				if (msg.length() >= bufferSize) {
+					System.out.println("Too large message.");
+				} else {
+					clientWorker.sendMessage(msg);
+				}
 			}
 		} catch (IOException e) {
 			System.out.println("Client thread failed with error: " + e.getMessage());
