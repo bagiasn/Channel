@@ -15,7 +15,7 @@ public class Constants {
 	public final static String RTN_INVALID = "Invalid format";
 	public final static String RTN_UNKNOWN = "Unknown command";
 	public final static String RTN_NOT_EXISTS = "This channel does not exist.";
-	public final static String RTN_ALREADY_SUB = "You are already subscribed to this channel.";
+	public final static String RTN_ALREADY_SUB = "You are already subscribed to a channel.";
 	public final static String RTN_NOT_SUB = "You are not subscribed to any channel.";
 	public final static String RTN_OK = "OK";
 	public final static String RTN_GREETING = "Welcome to Channel!\n"

@@ -68,17 +68,21 @@ public class ChannelManager {
 	public String subscribeUser(int id, String channelName) {
 		// We need to check all the tree so get the root first.
 		Channel root = channelTree.getRoot();
+		// First check that the user is not already subscribed to a channel. (Not really efficient but it's a demo)
 		for (Channel cont: root.getChildren()) {
 			for (Channel country: cont.getChildren()) {
-				if (country.getName().equalsIgnoreCase(channelName)) {
-					// Make sure the user is not already subscribed.
-					if (country.getMembers().contains(id)) {
-						return Constants.RTN_ALREADY_SUB;
-					} else {
-						// Add the user to the list.
-						country.getMembers().add(id);
-						return Constants.RTN_OK;
-					}
+				if (country.getMembers().contains(id)) {
+					return Constants.RTN_ALREADY_SUB;
+				}
+			}
+		}
+		// Then, find the channel and add him.
+		for (Channel cont: root.getChildren()) {
+			for (Channel country: cont.getChildren()) {
+				if (country.getName().equalsIgnoreCase(channelName)) {			
+					// Add the user to the list.
+					country.getMembers().add(id);
+					return Constants.RTN_OK;		
 				}
 			}
 		}
