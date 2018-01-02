@@ -18,6 +18,7 @@ public class UserHandler implements Runnable {
 	private int id;
 	private Socket socket;
 	private OutputStream outputStream;
+	private boolean isRunning = true;
 	
 	public UserHandler(int id, Socket socket) {
 		this.id = id;
@@ -35,7 +36,7 @@ public class UserHandler implements Runnable {
 			outputStream = socket.getOutputStream();
 			// Server starts the conversation by sending greetings and the available commands.
 			outputStream.write(Constants.RTN_GREETING.getBytes(), 0, Constants.RTN_GREETING.length());
-			while (true) {
+			while (isRunning) {
 				// We reallocate a new buffer to avoid cleaning it up. Let GC do its job.
 				byte[] inputBuffer = new byte[bufferSize];
 				// Block while waiting for a message.
@@ -50,7 +51,7 @@ public class UserHandler implements Runnable {
 				outputStream.write(result.getBytes());			
 			}
 		} catch (IOException e) {
-			System.out.println("Error occured: " + e.getMessage());
+			System.out.println("User " + id + " disconnected");
 		} finally {
 			if (socket != null) {
 				try {
@@ -63,6 +64,7 @@ public class UserHandler implements Runnable {
 			UserManager userManager = UserManager.getInstance();
 			// Remove yourself from the list, before exiting.
 			userManager.removeUser(id);
+			System.out.println("User " + id + " removed from the list.");
 		}
 	}
 	

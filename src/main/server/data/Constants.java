@@ -6,6 +6,7 @@ public class Constants {
 	public final static String CMD_SEND = "send";
 	public final static String CMD_SHOUT = "shout";
 	public final static String CMD_SUBSCRIBE = "subscribe";
+	public final static String CMD_STOP = "stop";
 	
 	public final static String CMD_ARG_GROUP = "groups";
 	public final static String CMD_ARG_CHANNEL = "channels";
@@ -22,7 +23,8 @@ public class Constants {
 			+ "\nlist [groups|channels]"
 			+ "\nsubscribe --channel"
 			+ "\nsend --message"
-			+ "\nshout --message";
+			+ "\nshout --message"
+			+ "\nstop service";
 	
 	public final static String MSG_SHOUT = "User %d shouts ";
 	

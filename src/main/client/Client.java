@@ -11,20 +11,27 @@ public class Client implements Runnable {
 	private final static int bufferSize = 512;
 	
 	private Socket socket;
+	public boolean isRunning = true;
 	
 	@Override
 	public void run() {
 		try {
 			socket = new Socket(InetAddress.getByName(null), port);
-			while (true) {
+			while (isRunning) {
 				byte[] inputBuffer = new byte[bufferSize];
 				socket.getInputStream().read(inputBuffer);
 				String msg = new String(inputBuffer, StandardCharsets.UTF_8);
-				System.out.println(">: " + msg);
-				System.out.print(">: ");
+				if (msg.trim().equals("stop")) {
+					System.out.println(">: Disconnected.");
+					isRunning = false;
+				} else {
+					System.out.println(">: " + msg);
+					System.out.print(">: ");
+				}
 			}
 		} catch (IOException e) {
-			System.out.println("Error occured: " + e.getMessage());
+			System.out.println("Disconnected from server");
+			isRunning = false;
 		} finally {
 			if (socket != null) {
 				try {
@@ -37,10 +44,14 @@ public class Client implements Runnable {
 	}
 	
 	public void sendMessage(String msg) {
-		try {
-			socket.getOutputStream().write(msg.getBytes());
-		} catch (IOException e) {
-			System.out.println(">: Could not send message " + msg + " Reason: " + e.getMessage());
+		if (isRunning) {
+			try {
+				socket.getOutputStream().write(msg.getBytes());
+			} catch (IOException e) {
+				System.out.println(">: Could not send message " + msg + " Reason: " + e.getMessage());
+			}
+		} else {		
+			System.out.println(">: You are disconnected from the service.");			
 		}
 	}
 }

@@ -28,6 +28,9 @@ public class InputHelper {
 				case Constants.CMD_LIST:
 					response = channelManager.getList(resultTrimmed);
 					break;
+				case Constants.CMD_STOP:
+					response = Constants.CMD_STOP;
+					break;
 				default:
 					response = Constants.RTN_UNKNOWN;
 			}

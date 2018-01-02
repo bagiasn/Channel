@@ -13,7 +13,7 @@ public class Main {
 		client.start();
 		
 		try {
-			while (true) {
+			while (clientWorker.isRunning) {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 				String msg = reader.readLine();
 				clientWorker.sendMessage(msg);
