@@ -27,6 +27,7 @@ public class Server implements Runnable {
 		try {
 			// Create a server socket to handle connections.
 			server = new ServerSocket(port);
+			System.out.println("Server running locally at port: " + port);
 			// Run forever.
 			while (true) {
 				// Create a new socket for each client.
