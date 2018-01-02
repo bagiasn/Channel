@@ -42,6 +42,7 @@ public class UserHandler implements Runnable {
 				inputStream.read(inputBuffer);
 				// Convert the byte array to string.
 				String msg = new String(inputBuffer, StandardCharsets.UTF_8);
+				msg = msg.trim();
 				// Log the message as arrived.
 				System.out.println("User " + id + " says: " + msg);
 				// Pass the message to handle appropriately.

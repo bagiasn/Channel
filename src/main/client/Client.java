@@ -21,7 +21,8 @@ public class Client implements Runnable {
 				byte[] inputBuffer = new byte[bufferSize];
 				socket.getInputStream().read(inputBuffer);
 				String msg = new String(inputBuffer, StandardCharsets.UTF_8);
-				if (msg.trim().equals("stop")) {
+				msg = msg.trim();
+				if (msg.equals("stop")) {
 					System.out.println(">: Disconnected.");
 					isRunning = false;
 				} else {
